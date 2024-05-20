@@ -64,6 +64,8 @@ fn is_default_serial(value: &NonZeroUsize) -> bool {
 pub enum DataVersion {
     #[serde(rename = "5.0")]
     V5_0,
+    #[serde(rename = "5.1")]
+    V5_1,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, serde::Deserialize, serde::Serialize)]
