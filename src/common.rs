@@ -99,6 +99,8 @@ pub struct Single {
     pub version: String,
     /// The vulnerability status for the version or range of versions. For a range, the status may be refined by the 'changes' list.
     pub status: Status,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub version_type: Option<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, serde::Deserialize, serde::Serialize)]
