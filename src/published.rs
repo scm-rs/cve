@@ -395,4 +395,10 @@ mod test {
 "#;
         let _metadata: Metadata = serde_json::from_str(input).unwrap();
     }
+
+    #[test]
+    fn default_value_returns_general() {
+        let value = Scenario::default_value();
+        assert_eq!(value, "GENERAL");
+    }
 }
