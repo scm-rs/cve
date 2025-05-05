@@ -133,4 +133,37 @@ mod test {
             r#""2020-01-02T12:34:00.000""#
         );
     }
+
+    #[test]
+    pub fn deserialize_invalid_timestamp() {
+        let invalid = r#""invalid-timestamp-foo""#;
+        let err = serde_json::from_str::<Timestamp>(invalid).unwrap_err();
+        assert!(err.to_string().contains("unable to parse"));
+    }
+
+    #[test]
+    pub fn deserialize_timestamp_primitive() {
+        let s = r#""2020-01-02T12:34:00.000""#;
+        let ts = serde_json::from_str(s).unwrap();
+        assert!(matches!(ts, Timestamp::Primitive(_)));
+    }
+
+    #[test]
+    pub fn deserialize_timestamp_offset() {
+        let s = r#""2020-01-02T12:34:00.000Z""#;
+        let ts = serde_json::from_str(s).unwrap();
+        assert!(matches!(ts, Timestamp::Offset(_)));
+    }
+
+    #[test]
+    pub fn assume_utc_for_offset_and_primitive() {
+        let offset_datetime = datetime!(2020-01-02 12:34 +01:00);
+        let primitive_datetime = datetime!(2020-01-02 12:34);
+
+        let offset_ts = Timestamp::from(offset_datetime);
+        let primitive_ts = Timestamp::from(primitive_datetime);
+
+        assert_eq!(offset_ts.assume_utc(), offset_datetime);
+        assert_eq!(primitive_ts.assume_utc(), primitive_datetime.assume_utc());
+    }
 }
