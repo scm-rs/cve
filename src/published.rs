@@ -150,7 +150,7 @@ pub struct Impact {
     pub descriptions: Vec<Description>,
 }
 
-/// This is impact type information (e.g. a text description, CVSSv2, CVSSv3, etc.). Must contain: At least one entry, can be text, CVSSv2, CVSSv3, others may be added.
+/// This is impact type information (e.g. a text description, CVSSv2, CVSSv3, CVSSv4, etc.). Must contain: At least one entry, can be text, CVSSv2, CVSSv3, others may be added.
 #[derive(Clone, Debug, PartialEq, Eq, serde::Deserialize, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Metric {
@@ -161,6 +161,10 @@ pub struct Metric {
     /// Description of the scenarios this metrics object applies to. If no specific scenario is given, GENERAL is used as the default and applies when no more specific metric matches.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub scenarios: Vec<Scenario>,
+
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "cvssV4_0")]
+    pub cvss_v4_0: Option<Value>,
 
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[serde(rename = "cvssV3_1")]
