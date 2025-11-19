@@ -47,6 +47,11 @@ pub struct Product {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub package_name: Option<String>,
 
+    /// PURL (package URL) a standardized way to locate the software package
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "packageURL")]
+    pub package_url: Option<String>,
+
     /// Affected products defined by CPE. This is an array of CPE values (vulnerable and not), we use an array so that we can make multiple statements about the same version and they are separate (if we used a JSON object we'd essentially be keying on the CPE name and they would have to overlap). Also, this allows things like cveDataVersion or cveDescription to be applied directly to the product entry. This also allows more complex statements such as \"Product X between versions 10.2 and 10.8\" to be put in a machine-readable format. As well since multiple statements can be used multiple branches of the same product can be defined here.
     // FIXME: use CPE type
     #[serde(default, skip_serializing_if = "Vec::is_empty")]

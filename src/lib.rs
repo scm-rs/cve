@@ -67,6 +67,8 @@ pub enum DataVersion {
     V5_0,
     #[serde(rename = "5.1")]
     V5_1,
+    #[serde(rename = "5.2")]
+    V5_2,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, serde::Deserialize, serde::Serialize)]
